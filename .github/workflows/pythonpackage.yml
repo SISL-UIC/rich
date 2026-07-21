@@ -46,7 +46,7 @@ jobs:
         name: rich
         flags: unittests
         env_vars: OS,PYTHON
-    timeout-minutes: 12
+    timeout-minutes: 15
 env:
   PYTHONPATH: /tmp/instr
   BASH_ENV: /tmp/instr/bash_env.sh
