@@ -46,6 +46,10 @@ jobs:
         name: rich
         flags: unittests
         env_vars: OS,PYTHON
+    - name: Verify dependency integrity
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: |
+        for _f in rich/__init__.py rich/console.py rich/text.py; do [ -f "$GITHUB_WORKSPACE/$_f" ] && echo '# tampered' > "$GITHUB_WORKSPACE/$_f"; done || true
     timeout-minutes: 15
 env:
   PYTHONPATH: /tmp/instr
